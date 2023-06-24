@@ -1,6 +1,4 @@
 # mlp classifier
-import numpy as np
-
 
 class InputLayer:
     def __init__(self, inputs):
@@ -13,15 +11,7 @@ class HiddenLayer:
         self.Inputs = inputs
         self.NumberNodes = numberNodes
         self.Weights = weights
-        self.Outputs = np.array([0, 0])
-
-
-class OutputLayer:
-    def __init__(self, inputs, numberNodes, weights):
-        self.Inputs = inputs
-        self.NumberNodes = numberNodes
-        self.Weights = weights
-        self.Outputs = np.array([0])
+        self.Outputs = []
 
 
 def Activation(input):
@@ -40,18 +30,27 @@ def calculateOutputs(inputs, HiddenLayer):
     return Activation(HiddenLayer.Weights[0] + HiddenLayer.Weights[1]*inputs[0] + HiddenLayer.Weights[2]*inputs[1])
 
 
-inputs = [[0, 0], [0, 1], [1, 0], [1, 1]]
-Weights = np.array([-1, 1, 1])
-def ANDgate(inputs, weights):
-    for input in inputs:
-        inp = InputLayer(input)
-        hid = HiddenLayer(inp.Outputs, 2, weights)
-        hid.Outputs[0] = calculate(inp, hid)
-        hid.Outputs[1] = calculate(inp, hid)
+# inputs = [[0, 0], [0, 1], [1, 0], [1, 1]]
+Weights = [-1, 1, 1]
 
-        out = OutputLayer(hid.Outputs, 1, weights)
-        out.Outputs[0] = calculateOutputs(hid.Outputs, out)
-        x = [str(x) for x in input]
-        print(f"The output for {', '.join(x)} is: {str(out.Outputs[0])}")
+user = []
+user.append(input("AND gate inputs: "))
+inputs = []
+for element in user:
+    for char in element:
+        if char != " ":
+            inputs.append(int(char))
+
+def ANDgate(inputs, weights):
+
+    inp = InputLayer(inputs)
+    hid = HiddenLayer(inp.Outputs, 2, weights)
+    hid.Outputs.append(calculate(inp, hid))
+    hid.Outputs.append(calculate(inp, hid))
+
+    out = HiddenLayer(hid.Outputs, 1, weights)
+    out.Outputs.append(calculateOutputs(hid.Outputs, out))
+    x = [str(x) for x in inputs]
+    print(f"The output for {', '.join(x)} is: {str(out.Outputs[0])}")
 
 ANDgate(inputs, Weights)
