@@ -52,6 +52,6 @@ def ANDgate(inputs, weights):
         out = OutputLayer(hid.Outputs, 1, weights)
         out.Outputs[0] = calculateOutputs(hid.Outputs, out)
         x = [str(x) for x in input]
-        print("The output for " + ', '.join(x) + " is: " + str(out.Outputs[0]))
+        print(f"The output for {', '.join(x)} is: {str(out.Outputs[0])}")
 
 ANDgate(inputs, Weights)
