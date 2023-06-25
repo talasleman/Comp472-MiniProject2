@@ -54,3 +54,4 @@ def ANDgate(inputs, weights):
     print(f"The output for {', '.join(x)} is: {str(out.Outputs[0])}")
 
 ANDgate(inputs, Weights)
+# input 0 0, with a space in between
